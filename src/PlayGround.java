@@ -3,7 +3,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class PlayGround {
+public class PlayGround extends Cards {
+
+	public PlayGround(String cardName, String color, int value) {
+		super(cardName, color, value);
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -29,18 +33,11 @@ public class PlayGround {
 		System.out.print("Geben Sie Ihren Namen ein: ");
 		String name = scanner.nextLine();
 
-		Players bank = new Players("Dealer", 0, 0);
-		Players player1 = new Players(name, 0, 0);
+		Players bank = new Players("Dealer",  0);
+		Players player1 = new Players(name,  0);
 
-		System.out.println(bank);
-		System.out.println(player1);
-
-		// Start des Spiels
 		// Mische Karten:
 		Collections.shuffle(cards);
-		// System.out.println(cards);
-
-		// System.out.println(cards.get(51));
 
 		// Karten austeilen
 
@@ -54,69 +51,52 @@ public class PlayGround {
 		cards.get(3).showCards();
 
 		// addieren der Werte
-		int punktePlayer1 = player1.getPoints() + cards.get(0).getValue();
-		player1.setPoints(punktePlayer1);
-		punktePlayer1 = player1.getPoints() + cards.get(2).getValue();
-		player1.setPoints(punktePlayer1);
-		System.out.println(player1);
+		evaluatePointsPlayer(cards, player1, 0, 2);
 
 		// addiere Bank-Werte
-		int punkteBank = bank.getPoints() + cards.get(1).getValue();
-		bank.setPoints(punkteBank);
-		punkteBank = bank.getPoints() + cards.get(3).getValue();
-		bank.setPoints(punkteBank);
+		evaluatePointsBank(cards, bank, 1, 3);
 
-		// Abfrage, ob Spieler noch eine Karte will?
-		while (true) {
-			System.out.printf("%s, wollen Sie noch eine Karte? ", player1.getPlayerName());
-			String jaNein = scanner.nextLine();
-			if (!jaNein.equals("Ja")) {
+		// Abfrage, ob ein BlackJack vorliegt
+		if(player1.getPoints() == 21 && bank.getPoints() != 21){
+			System.out.println("BlackJack " + player1.getPlayerName());
+		} else if (bank.getPoints() == 21){
+			System.out.println("BlackJack " + bank.getPlayerName());
+		} else {
+			while (true) {
+				System.out.printf("%s, wollen Sie noch eine Karte? ", player1.getPlayerName());
+				String jaNein = scanner.nextLine();
+				if (jaNein.equals("Ja") || jaNein.equals("ja")) {
+					System.out.println("+ eine Karte!");
+					deckCounter++;
+					cards.get(deckCounter).showCards();
+					int punktePlayer1 = player1.getPoints() + cards.get(deckCounter).getValue();
+					player1.setPoints(punktePlayer1);
+					if (player1.getPoints() > 21) {
+						System.out.println("Sie haben mit " + player1.getPoints() + " Punkten verloren.");
+						break;
+					}
+					System.out.println(player1);
+				}
 				System.out.println("Hier kommt die Bank...");
 				cards.get(1).showCards();
 				if (cards.get(1).getCardName().equals("ace") || cards.get(3).getCardName().equals("ace")) {
-					do {
-						if ((bank.getPoints()) >= 17 && (bank.getPoints() <= 21)) {
-							System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
-						} else {
-							cards.get(deckCounter);
-							punkteBank = bank.getPoints() + cards.get(deckCounter).getValue();
-							bank.setPoints(punkteBank);
-							System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
-						}
-					} while (bank.getPoints() < 17);
+					drawCards(deckCounter, cards, bank);
 				} else {
-					do {
-					if ((bank.getPoints()) >= 17 && (bank.getPoints() <= 21)) {
-						System.out.println("Bank (ohne Ass) " + bank.getPoints() );
-						break;
-					}
-					else {
-						cards.get(deckCounter);
-						punkteBank = bank.getPoints() + cards.get(deckCounter).getValue();
-						bank.setPoints(punkteBank);
-						System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
-					}
-					}while(bank.getPoints() < 17);
+					drawCards(deckCounter, cards, bank);
 				}
-
 				break;
 			}
-			System.out.println("+ eine Karte!");
-			deckCounter++;
-			cards.get(deckCounter).showCards();
-			punktePlayer1 = player1.getPoints() + cards.get(deckCounter).getValue();
-			player1.setPoints(punktePlayer1);
-			if (player1.getPoints() > 21) {
-				System.out.println("Sie haben verloren mit " + player1.getPoints() + " Punkten.");
-				break;
-			}
-			System.out.println(player1);
 		}
-
+		if((bank.getPoints()>player1.getPoints())&&bank.getPoints()<=21){
+			System.out.println("Bank wins!");
+		}
+		else if((player1.getPoints()>bank.getPoints())&&player1.getPoints()<=21){
+			System.out.println(player1.getPlayerName() + " wins!");
+		}
+		else{
+			System.out.println("Push! - It's a draw!");
+		}
 	}
-
 }
 
-//		
-//int points = cards.
-//player1.setPoints(points);
+

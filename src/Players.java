@@ -9,18 +9,16 @@ public class Players {
 		
 		
 		//constructor
-		public Players(String playerName, int amountOfCards, int points) {
+		public Players(String playerName, int points) {
 			super();
 			this.playerName = playerName;
-			this.amountOfCards = amountOfCards;
 			this.points = points;
 		}
 		
 			
 		@Override
 		public String toString() {
-			return "Players [playerName=" + playerName + ", amountOfCards=" + amountOfCards + ", points=" + points
-					+ "]";
+			return playerName + " hat " + points + " Punkte auf der Hand";
 		}
 
 
