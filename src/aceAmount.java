@@ -1,17 +1,20 @@
+import java.util.ArrayList;
 
 public interface aceAmount {
 	
 	public static void aceAmountBank(int aceCounterBank, Players bank) {
-	
-		System.out.println("+ eine Karte!");
+		if (bank.getPoints() <= 11 && aceCounterBank > 0) {
+			System.out.println("Bank-Wert 11 oder kleiner und ein Ass");
+			bank.setPoints(bank.getPoints() + 10);
+		}
 
 	}
 		
 	public static void aceAmountPlayer(int aceCounterPlayer, Players player1) {
-		if(aceCounterPlayer == 0);
-			
-		
-		
+		if (player1.getPoints() <= 11 && aceCounterPlayer > 0) {
+			System.out.println("Player1 Wert 11 oder kleiner und ein Ass");
+			player1.setPoints(player1.getPoints() + 10);
+		} 
 		
 		/*
 		 * Info für Marcel ;-)

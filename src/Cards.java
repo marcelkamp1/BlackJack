@@ -41,8 +41,9 @@ public class Cards {
 
 	// Show cards
 	public void showCards() {
-
-		System.out.println(this.getValue() + " of " + this.getColor());
+		
+		System.out.println(this.getValue() +":" +this.getCardName() + " of " + this.getColor());
+		//System.out.println(this.getValue() + " of " + this.getColor());
 	}
 
 
@@ -52,22 +53,7 @@ public class Cards {
 		return 0;
 	}
 
-	public static void drawCards(int deckCounter, ArrayList<Cards> cards, Players bank, int aceCounterBank) {
-		int punkteBank;
-		do {
-			if ((bank.getPoints()) >= 17 && (bank.getPoints() <= 21)) {
-				System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
-			} else {
-				cards.get(deckCounter);
-				if(cards.get(deckCounter).getCardName().equals("ace"))
-					aceCounterBank++;
-				punkteBank = bank.getPoints() + cards.get(deckCounter).getValue();
-				bank.setPoints(punkteBank);
-				System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
-			}
-			
-		} while (bank.getPoints() < 17);
-	}
+	
 
 	public static void evaluatePointsPlayer(ArrayList<Cards> cards, Players player1, int i0, int i2) {
 		int punktePlayer1 = player1.getPoints() + cards.get(i0).getValue();
