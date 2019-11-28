@@ -27,22 +27,6 @@ public class Players {
 			return playerName;
 		}
 
-
-		public void setPlayerName(String playerName) {
-			this.playerName = playerName;
-		}
-
-
-		public int getAmountOfCards() {
-			return amountOfCards;
-		}
-
-
-		public void setAmountOfCards(int amountOfCards) {
-			this.amountOfCards = amountOfCards;
-		}
-
-
 		public int getPoints() {
 			return points;
 		}

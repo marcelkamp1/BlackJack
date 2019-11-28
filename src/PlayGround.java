@@ -18,11 +18,23 @@ public class PlayGround extends Cards implements aceAmount {
 		int aceCounterBank = 0;
 		boolean sCardDraw = true;
 
+
+
+		// Generiere Spieler
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Geben Sie Ihren Namen ein: ");
+		String name = scanner.nextLine();
+
+
+
+		Players bank = new Players("Dealer", 0);
+		Players player1 = new Players(name, 0);
+
 		// Kartendeklaration
-		String[] nameValue = new String[] { "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-				"jack", "queen", "king", "ace" };
-		String[] playColors = new String[] { "Hearts", "Diamonds", "Clubs", "Spades" };
-		int[] values = new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11 };
+		String[] nameValue = new String[]{"two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+				"jack", "queen", "king", "ace"};
+		String[] playColors = new String[]{"Hearts", "Diamonds", "Clubs", "Spades"};
+		int[] values = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
 
 		// Kartengenerator
 		ArrayList<Cards> cards = new ArrayList<>();
@@ -32,14 +44,6 @@ public class PlayGround extends Cards implements aceAmount {
 			}
 		}
 
-		// Generiere Spieler
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("Geben Sie Ihren Namen ein: ");
-		String name = scanner.nextLine();
-
-		Players bank = new Players("Dealer", 0);
-		Players player1 = new Players(name, 0);
-
 		// Mische Karten:
 		Collections.shuffle(cards);
 
@@ -48,18 +52,22 @@ public class PlayGround extends Cards implements aceAmount {
 		// Karten zeigen
 		System.out.println("Karten von Spieler 1:");
 		cards.get(0).showCards();
-		if(cards.get(0).getCardName().equals("ace"))
+		if (cards.get(0).getCardName().equals("ace")) {
 			aceCounterPlayer++;
+			aceAmount.aceAmountPlayer(aceCounterPlayer, player1);
+		}
 		cards.get(2).showCards();
-		if(cards.get(2).getCardName().equals("ace"))
+		if (cards.get(2).getCardName().equals("ace")) {
 			aceCounterPlayer++;
+			aceAmount.aceAmountPlayer(aceCounterPlayer, player1);
+		}
 
 		System.out.println("Karten von Bank:");
 		cards.get(1);
-		if(cards.get(1).getCardName().equals("ace"))
+		if (cards.get(1).getCardName().equals("ace"))
 			aceCounterBank++;
 		cards.get(3).showCards();
-		if(cards.get(3).getCardName().equals("ace"))
+		if (cards.get(3).getCardName().equals("ace"))
 			aceCounterBank++;
 
 		// addieren der Werte
@@ -74,10 +82,7 @@ public class PlayGround extends Cards implements aceAmount {
 		} else if (bank.getPoints() == 21) {
 			System.out.println("BlackJack " + bank.getPlayerName());
 		} else {
-			// Will Spieler Karte?
-			System.out.println(aceCounterBank);
-			System.out.println(aceCounterPlayer);
-						
+
 			while (sCardDraw) {
 				System.out.printf("%s, wollen Sie noch eine Karte? ", player1.getPlayerName());
 				String jaNein = scanner.nextLine();
@@ -85,13 +90,14 @@ public class PlayGround extends Cards implements aceAmount {
 					System.out.println("+ eine Karte!");
 					deckCounter++;
 					cards.get(deckCounter).showCards();
-					if(cards.get(deckCounter).getCardName().equals("ace"))
-						aceCounterPlayer++;;
+					if (cards.get(deckCounter).getCardName().equals("ace"))
+						aceCounterPlayer++;
 					int punktePlayer1 = player1.getPoints() + cards.get(deckCounter).getValue();
 					player1.setPoints(punktePlayer1);
 					aceAmount.aceAmountPlayer(aceCounterPlayer, player1);
 					if (player1.getPoints() > 21) {
 						System.out.println("Sie haben mit " + player1.getPoints() + " Punkten verloren.");
+						System.out.println("Die Bank gewinnt!");
 						return;
 					}
 					System.out.println(player1);
@@ -110,7 +116,8 @@ public class PlayGround extends Cards implements aceAmount {
 			} else {
 				drawCards(deckCounter, cards, bank, aceCounterBank);
 				if (bank.getPoints() > 21) {
-					System.out.println("Die Bank hat mit " + bank.getPoints() + " verloren!");
+					System.out.println("Die Bank hat mit " + bank.getPoints() + " Punkten verloren!");
+					System.out.println(player1.getPlayerName() + " gewinnt!");
 
 				}
 
@@ -121,10 +128,20 @@ public class PlayGround extends Cards implements aceAmount {
 				System.out.println(player1.getPlayerName() + " wins!");
 			} else if ((bank.getPoints() > player1.getPoints()) && bank.getPoints() <= 21) {
 				System.out.println(bank.getPlayerName() + " wins!");
-			}
+			} else if (bank.getPoints() == player1.getPoints())
+				System.out.println("Draw!");
 
 		}
+		//restartGame aktuell Fehlfunktion
+		/*
+			System.out.println("Neustart? ja/nein");
+			Scanner restart = new Scanner(System.in);
+			String answer = restart.nextLine();
+			if(!answer.equals("ja"))
+				newGame = false;
+			 */
+		scanner.close();
 	}
 
-
 }
+
