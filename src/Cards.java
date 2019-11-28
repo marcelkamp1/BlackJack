@@ -52,13 +52,15 @@ public class Cards {
 		return 0;
 	}
 
-	public static void drawCards(int deckCounter, ArrayList<Cards> cards, Players bank) {
+	public static void drawCards(int deckCounter, ArrayList<Cards> cards, Players bank, int aceCounterBank) {
 		int punkteBank;
 		do {
 			if ((bank.getPoints()) >= 17 && (bank.getPoints() <= 21)) {
 				System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
 			} else {
 				cards.get(deckCounter);
+				if(cards.get(deckCounter).getCardName().equals("ace"))
+					aceCounterBank++;
 				punkteBank = bank.getPoints() + cards.get(deckCounter).getValue();
 				bank.setPoints(punkteBank);
 				System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
