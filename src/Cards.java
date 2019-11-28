@@ -63,6 +63,7 @@ public class Cards {
 				bank.setPoints(punkteBank);
 				System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
 			}
+			
 		} while (bank.getPoints() < 17);
 	}
 
