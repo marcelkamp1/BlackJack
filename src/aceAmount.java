@@ -3,9 +3,16 @@ import java.util.ArrayList;
 public interface aceAmount {
 	
 	public static void aceAmountBank(int aceCounterBank, Players bank) {
+				
 		if (bank.getPoints() <= 11 && aceCounterBank > 0) {
 			System.out.println("Bank-Wert 11 oder kleiner und ein Ass");
 			bank.setPoints(bank.getPoints() + 10);
+		}
+		else if (bank.getPoints() > 21 && aceCounterBank > 0) {
+			bank.setPoints(bank.getPoints() - 10);
+		}
+		else {
+			bank.setPoints(bank.getPoints());
 		}
 
 	}
@@ -15,7 +22,9 @@ public interface aceAmount {
 			System.out.println("Player1 Wert 11 oder kleiner und ein Ass");
 			player1.setPoints(player1.getPoints() + 10);
 		} 
-		
+		if (player1.getPoints() > 21 && aceCounterPlayer > 0) {
+			player1.setPoints(player1.getPoints() - 10);
+		}
 		/*
 		 * Info für Marcel ;-)
 		 * 

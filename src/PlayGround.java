@@ -66,7 +66,6 @@ public class PlayGround extends Cards implements aceAmount {
 		evaluatePointsPlayer(cards, player1, 0, 2);
 
 		// addiere Bank-Werte
-		aceAmount.aceAmountBank(aceCounterPlayer, bank);
 		evaluatePointsBank(cards, bank, 1, 3);
 
 		// Abfrage, ob ein BlackJack vorliegt
@@ -111,7 +110,7 @@ public class PlayGround extends Cards implements aceAmount {
 			System.out.print("Dies ist die zweite Karte der Bank: ");
 			
 			cards.get(1).showCards();
-			aceAmount.aceAmountBank(aceCounterBank, bank);
+			//aceAmount.aceAmountBank(aceCounterBank, bank);
 			System.out.println("Die Bank hat im Augenblick folgende Punkte: " +bank.getPoints());
 				
 			do {
@@ -125,9 +124,10 @@ public class PlayGround extends Cards implements aceAmount {
 					
 					bank.setPoints(bank.getPoints() + cards.get(deckCounter).getValue());
 					aceAmount.aceAmountBank(aceCounterBank, bank);
+					
 					deckCounter++;
 					
-					System.out.println(deckCounter + " DeckCounter");
+					//System.out.println(deckCounter + " DeckCounter");
 					System.out.println("Neuer Wert der Karten: " + bank.getPoints());
 					
 					System.out.println("Bank hat " + bank.getPoints() + " Punkte!");
@@ -136,46 +136,6 @@ public class PlayGround extends Cards implements aceAmount {
 			} while (bank.getPoints() < 17);
 		
 		
-			
-			
-			
-			
-			/*
-			//================================================
-			if (cards.get(1).getCardName().equals("ace") || cards.get(3).getCardName().equals("ace")) {
-				drawCards(deckCounter, cards, bank, aceCounterBank);
-				
-
-			} else {
-				drawCards(deckCounter, cards, bank, aceCounterBank);
-				if (bank.getPoints() > 21) {
-					System.out.println("Die Bank hat mit " + bank.getPoints() + " verloren!");
-
-				}
-
-			}
-			//=================================================
-			
-				*/
-				
-				
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			// Auswertung
